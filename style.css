@@ -1,0 +1,42 @@
+.body {
+    margin: 0;
+}
+
+.main {
+    height: 100vh;
+    margin: 0;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+
+}
+
+.todo {
+    padding: 25px;
+    background-color: black;
+    color: white; 
+    text-align: center;
+    font-size: 20px;
+}
+
+.todo__form {
+    display: flex;
+    margin: 20px 0;
+    gap: 10px
+}
+
+.todo__input {
+    font-size: 35px; 
+}
+
+.todo__button {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.todo__list-title {
+    text-transform: uppercase ;
+   
+}
+
+
