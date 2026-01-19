@@ -24,6 +24,12 @@ const deleteTodo = (id) => {
     renderTodos();
 };
 
+const toggleTodo = (id) => {
+    const todo = state.todos.find(todo => todo.id === id);
+    todo.completed = !todo.completed;
+    renderTodos()
+}
+
 const renderTodos = () => {
     todoList.innerHTML = ''
     state.todos.forEach(todo => {
@@ -33,17 +39,18 @@ const renderTodos = () => {
         const buttonDel = item.querySelector('.todo__button-delete');
         item.dataset.id = todo.id;
         itemText.textContent = todo.text;
-        checkBox.addEventListener('click', () => {
-            itemText.classList.toggle('todo__text-crossout') // Зачеркивает текст
-        });
-
+        itemText.classList.toggle('todo__text-crossout', todo.completed);
+        checkBox.checked = todo.completed; // Чтобы галочка была отмечена
 
         todoList.append(item);
-       
+
         buttonDel.addEventListener('click', () => {
             deleteTodo(todo.id)
-        })
+        });
 
+        checkBox.addEventListener('click', () => {
+            toggleTodo(todo.id)
+        });
 
     })
 }
@@ -53,6 +60,8 @@ todoForm.addEventListener('submit', (event) => {
     todoInput.value = ''
     event.preventDefault();
 })
+
+
 
 
 
