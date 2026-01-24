@@ -2,21 +2,28 @@ const todoInput = document.querySelector('.todo__input');
 const buttonSubmit = document.querySelector('.todo__button-submit');
 const todoForm = document.querySelector('.todo__form');
 const todoList = document.querySelector('.todo__list');
+const todoCounter = document.querySelector('.todo__counter');
 const itemTemplate = document.querySelector('#todo-template').content;
+
 
 const state = {
     todos: []
 }
 
 const addTodos = (text) => {
-    const newTodos = {
+    const newTodo = {
         id: Date.now(),
         text: text,
         completed: false,
     };
 
-    state.todos.push(newTodos);
+    state.todos.push(newTodo);
     renderTodos()
+}
+
+const updateCounter = () => {
+    const count = state.todos.filter(todo => !todo.completed).length;
+    todoCounter.textContent = `Осталось: ${count} задач`;
 }
 
 const deleteTodo = (id) => {
@@ -43,6 +50,7 @@ const renderTodos = () => {
         checkBox.checked = todo.completed; // Чтобы галочка была отмечена
 
         todoList.append(item);
+        updateCounter();
 
         buttonDel.addEventListener('click', () => {
             deleteTodo(todo.id)
@@ -56,11 +64,15 @@ const renderTodos = () => {
 }
 
 todoForm.addEventListener('submit', (event) => {
-    addTodos(todoInput.value)
-    todoInput.value = ''
     event.preventDefault();
+    const text = todoInput.value.trim();
+    if (text === '') {
+        return }
+    addTodos(text)
+    todoInput.value = ''
 })
 
+updateCounter();
 
 
 
