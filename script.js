@@ -18,7 +18,7 @@ const addTodos = (text) => {
     };
 
     state.todos.push(newTodo);
-    renderTodos()
+    renderTodos();
 }
 
 const updateCounter = () => {
@@ -34,7 +34,7 @@ const deleteTodo = (id) => {
 const toggleTodo = (id) => {
     const todo = state.todos.find(todo => todo.id === id);
     todo.completed = !todo.completed;
-    renderTodos()
+    renderTodos();
 }
 
 const renderTodos = () => {
@@ -50,8 +50,6 @@ const renderTodos = () => {
         checkBox.checked = todo.completed; // Чтобы галочка была отмечена
 
         todoList.append(item);
-        updateCounter();
-
         buttonDel.addEventListener('click', () => {
             deleteTodo(todo.id)
         });
@@ -59,19 +57,32 @@ const renderTodos = () => {
         checkBox.addEventListener('click', () => {
             toggleTodo(todo.id)
         });
-
     })
+    updateCounter();
+    saveTodos();
 }
 
 todoForm.addEventListener('submit', (event) => {
     event.preventDefault();
     const text = todoInput.value.trim();
     if (text === '') {
-        return }
+        return
+    }
     addTodos(text)
     todoInput.value = ''
 })
 
+const saveTodos = () => {
+    localStorage.setItem('todos', JSON.stringify(state.todos));
+};
+
+const loadTodos = () => {
+    state.todos = JSON.parse(localStorage.getItem('todos')) || [];
+};
+
+
+loadTodos();
+renderTodos();
 updateCounter();
 
 
